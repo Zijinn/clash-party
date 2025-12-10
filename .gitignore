@@ -10,3 +10,17 @@ out
 *.ttf
 party.md
 CLAUDE.md
+
+# Swift build artifacts
+.build/
+*.xcodeproj/xcuserdata/
+*.xcodeproj/project.xcworkspace/xcuserdata/
+DerivedData/
+*.xcarchive
+*.app
+*.dSYM.zip
+*.dSYM
+
+# Swift Package Manager
+.swiftpm/
+Package.resolved
