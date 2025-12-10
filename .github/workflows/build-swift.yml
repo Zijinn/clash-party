@@ -74,10 +74,23 @@ jobs:
           echo "Version: $VERSION"
       
       - name: Create DMG
-        if: github.event_name == 'push'
         run: |
           chmod +x create-dmg.sh
           ./create-dmg.sh .build/Build/Products/Release/ClashParty.app ${{ steps.get_version.outputs.version }}
+      
+      - name: Verify DMG
+        run: |
+          if [ -f .build/ClashParty-*.dmg ]; then
+            echo "✅ DMG created successfully"
+            ls -lh .build/ClashParty-*.dmg
+            if [ -f .build/ClashParty-*.dmg.sha256 ]; then
+              echo "✅ Checksum file created"
+              cat .build/ClashParty-*.dmg.sha256
+            fi
+          else
+            echo "❌ DMG creation failed"
+            exit 1
+          fi
       
       - name: Archive application (ZIP)
         if: github.event_name == 'push'

@@ -77,7 +77,7 @@ hdiutil create -srcfolder "$TMP_DIR" \
 
 # Mount the DMG
 echo -e "${YELLOW}Mounting DMG...${NC}"
-MOUNT_DIR=$(hdiutil attach "$DMG_TEMP_PATH" -readwrite -noverify -noautoopen | grep -E '^/dev/' | sed 1q | awk '{print $3}')
+MOUNT_DIR=$(hdiutil attach "$DMG_TEMP_PATH" -readwrite -noverify -noautoopen | grep -E '^/dev/' | tail -n1 | cut -f3)
 
 if [ -z "$MOUNT_DIR" ]; then
     echo -e "${RED}Error: Failed to mount DMG${NC}"
@@ -124,7 +124,13 @@ fi
 
 # Unmount the DMG
 echo -e "${YELLOW}Unmounting DMG...${NC}"
-hdiutil detach "$MOUNT_DIR" -force || true
+if ! hdiutil detach "$MOUNT_DIR" -force; then
+    echo -e "${YELLOW}Warning: Failed to detach DMG on first attempt, retrying...${NC}"
+    sleep 2
+    if ! hdiutil detach "$MOUNT_DIR" -force; then
+        echo -e "${YELLOW}Warning: Failed to detach DMG, but continuing...${NC}"
+    fi
+fi
 sync
 sleep 2
 

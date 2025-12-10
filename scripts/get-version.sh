@@ -12,7 +12,7 @@ if [ ! -f "$PROJECT_FILE" ]; then
     exit 0
 fi
 
-VERSION=$(grep -m1 'MARKETING_VERSION' "$PROJECT_FILE" | sed -e 's/.*= \(.*\);/\1/' | tr -d ' ' || echo "$DEFAULT_VERSION")
+VERSION=$(grep -m1 'MARKETING_VERSION' "$PROJECT_FILE" | sed -e 's/.*= *"\?\([^"]*\)"\?;.*/\1/' | tr -d ' ' || echo "$DEFAULT_VERSION")
 
 if [ -z "$VERSION" ]; then
     echo "$DEFAULT_VERSION"
