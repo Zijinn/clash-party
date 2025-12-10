@@ -14,6 +14,7 @@ on:
       - 'Package.swift'
       - 'Makefile'
       - 'create-dmg.sh'
+      - 'scripts/get-version.sh'
       - '.github/workflows/build-swift.yml'
   pull_request:
     branches:
@@ -25,6 +26,7 @@ on:
       - 'Package.swift'
       - 'Makefile'
       - 'create-dmg.sh'
+      - 'scripts/get-version.sh'
       - '.github/workflows/build-swift.yml'
 
 jobs:
@@ -66,7 +68,8 @@ jobs:
       - name: Get version
         id: get_version
         run: |
-          VERSION=$(grep -m1 'MARKETING_VERSION' ClashParty.xcodeproj/project.pbxproj | sed -e 's/.*= \(.*\);/\1/' | tr -d ' ' || echo "1.0.0")
+          chmod +x scripts/get-version.sh
+          VERSION=$(./scripts/get-version.sh)
           echo "version=$VERSION" >> $GITHUB_OUTPUT
           echo "Version: $VERSION"
       

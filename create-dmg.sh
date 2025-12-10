@@ -152,7 +152,7 @@ fi
 echo -e "${YELLOW}Generating checksum...${NC}"
 if command -v shasum &> /dev/null; then
     CHECKSUM=$(shasum -a 256 "$DMG_PATH" | awk '{print $1}')
-    echo "$CHECKSUM  $(basename $DMG_PATH)" > "$DMG_PATH.sha256"
+    echo "$CHECKSUM  $(basename "$DMG_PATH")" > "$DMG_PATH.sha256"
     echo -e "${BLUE}SHA256:${NC} $CHECKSUM"
 fi
 

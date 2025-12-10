@@ -8,7 +8,7 @@ SCHEME = ClashParty
 PROJECT = ClashParty.xcodeproj
 CONFIGURATION = Release
 DERIVED_DATA = .build
-VERSION = $(shell grep -m1 'MARKETING_VERSION' ClashParty.xcodeproj/project.pbxproj | sed -e 's/.*= \(.*\);/\1/' | tr -d ' ' || echo "1.0.0")
+VERSION = $(shell ./scripts/get-version.sh)
 
 # Default target
 all: build
