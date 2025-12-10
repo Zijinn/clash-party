@@ -86,9 +86,10 @@ fi
 
 echo -e "${BLUE}Mounted at:${NC} $MOUNT_DIR"
 
-# Configure the DMG appearance using AppleScript
-echo -e "${YELLOW}Configuring DMG appearance...${NC}"
-osascript <<EOT
+# Configure the DMG appearance using AppleScript (only if not in CI)
+if [ -z "$CI" ]; then
+    echo -e "${YELLOW}Configuring DMG appearance...${NC}"
+    osascript <<EOT
 tell application "Finder"
     tell disk "$VOLUME_NAME"
         open
@@ -99,7 +100,6 @@ tell application "Finder"
         set theViewOptions to the icon view options of container window
         set arrangement of theViewOptions to not arranged
         set icon size of theViewOptions to 128
-        set background picture of theViewOptions to file ".background:background.png"
         
         -- Position the app icon
         set position of item "$APP_NAME.app" of container window to {150, 200}
@@ -115,13 +115,18 @@ tell application "Finder"
 end tell
 EOT
 
-# Give the system time to finish
-sleep 3
+    # Give the system time to finish
+    sleep 3
+else
+    echo -e "${YELLOW}Skipping DMG appearance configuration (CI environment)${NC}"
+    sleep 1
+fi
 
 # Unmount the DMG
 echo -e "${YELLOW}Unmounting DMG...${NC}"
-hdiutil detach "$MOUNT_DIR" || true
+hdiutil detach "$MOUNT_DIR" -force || true
 sync
+sleep 2
 
 # Convert to compressed read-only DMG
 echo -e "${YELLOW}Converting to compressed DMG...${NC}"
