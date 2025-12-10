@@ -1,62 +1,102 @@
+# Clash Party - Swift for macOS
+
 <h3 align="center">
   <img height='48px' src='./images/icon-white.png#gh-dark-mode-only'>
   <img height='48px' src='./images/icon-black.png#gh-light-mode-only'>
 </h3>
 
-<h3 align="center">Another <a href="https://github.com/MetaCubeX/mihomo">Mihomo</a> GUI</h3>
+<h3 align="center">A Native macOS <a href="https://github.com/MetaCubeX/mihomo">Mihomo</a> GUI</h3>
 
 <p align="center">
-  <a href="https://github.com/mihomo-party-org/clash-party/releases">
-    <img src="https://img.shields.io/github/release/mihomo-party-org/clash-party/all.svg">
+  <a href="https://github.com/Zijinn/clash-party/releases">
+    <img src="https://img.shields.io/github/release/Zijinn/clash-party/all.svg">
   </a>
   <a href="https://t.me/mihomo_party_group">
     <img src="https://img.shields.io/badge/Telegram-Group-blue?logo=telegram">
   </a>
 </p>
-<div align='center'>
-<img width='90%' src="./images/preview.jpg">
-</div>
 
-### 本项目认证稳定机场推荐：“[狗狗加速](https://party.dginv.click/#/register?code=ARdo0mXx)”
-##### [狗狗加速 —— 技术流机场 Doggygo VPN](https://party.dginv.click/#/register?code=ARdo0mXx)
+## Overview
 
-- 高性能海外机场，稳定首选，海外团队，无跑路风险
-- Clash Party专属8折优惠码：party，仅有500份
-- Party专属链接注册送 3 天，每天 1G 流量 [免费试用](https://party.dginv.click/#/register?code=ARdo0mXx)
-- 优惠套餐每月仅需 15.8 元，160G 流量，年付 8 折
-- 全球首家支持Hysteria1/2 协议，集群负载均衡设计，高速专线，基于最新UDP quic技术，极低延迟，无视晚高峰，4K 秒开，配合Clash Party食用更省心！
-- 解锁流媒体及 ChatGPT
-- 官网：[https://狗狗加速.com](https://party.dginv.click/#/register?code=ARdo0mXx)
+Clash Party is a native macOS application built with Swift and SwiftUI that provides a GUI for [Mihomo](https://github.com/MetaCubeX/mihomo) (Clash Meta). This application offers excellent performance, low resource usage, and seamless macOS integration.
 
-### 特性
+## Features
 
-- [x] 一键 Smart Core 规则覆写，基于 AI 模型自动选择最优节点 详细介绍请看 [这里](https://clashparty.org/docs/guide/smart-core)
-- [x] 开箱即用，无需服务模式的 Tun
-- [x] 多种配色主题可选，UI 焕然一新
-- [x] 支持大部分 Mihomo(Clash Meta) 常用配置修改
-- [x] 内置 Smart内核 与 Mihomo(Clash Meta) 内核
-- [x] 通过 WebDAV 一键备份和恢复配置
-- [x] 强大的覆写功能，任意修订配置文件
-- [x] 深度集成 Sub-Store，轻松管理订阅
+- **Native macOS Experience**: Built with SwiftUI for a truly native look and feel
+- **Menu Bar Integration**: Quick access from the macOS menu bar
+- **System Proxy Control**: Seamless integration with macOS system proxy settings
+- **Profile Management**: Easy management of multiple proxy configurations
+- **Real-time Statistics**: Monitor upload/download speeds and connection status
+- **Low Resource Usage**: Significantly lower memory and CPU usage
+- **Dark Mode Support**: Native macOS dark mode support
+- ⚡ **10x faster startup time** compared to Electron-based versions
+- 💾 **80% less memory usage** compared to Electron-based versions
+- 🔋 **Better energy efficiency** for longer battery life
 
-### 安装/使用指南见 [官方文档](https://clashparty.org)
+## Requirements
 
----
+- macOS 13.0 (Ventura) or later
+- Xcode 15.0 or later (for building from source)
+- Mihomo core binary
 
-## 🚀 Swift for macOS Version
+## Installation
 
-A native macOS version written in Swift is now available! This version offers:
-- ⚡ 10x faster startup time
-- 💾 80% less memory usage  
-- 🎨 Native macOS look and feel
-- 🔋 Better energy efficiency
+### Option 1: Download Pre-built DMG (Recommended)
 
-See [README-SWIFT.md](README-SWIFT.md) for details and build instructions.
+Download the latest DMG from the [releases page](https://github.com/Zijinn/clash-party/releases):
 
-### 📖 Build and Usage Documentation
+1. Download `ClashParty-{version}-macOS.dmg`
+2. Open the DMG file
+3. Drag ClashParty.app to the Applications folder
+4. Launch from Applications or Spotlight
 
-- **[BUILD-MACOS.md](BUILD-MACOS.md)** - Comprehensive guide for building and using Clash Party on macOS (both Swift and Electron versions)
-- **[INSTALL-SWIFT.md](INSTALL-SWIFT.md)** - Detailed Swift version installation guide
-- **[README-SWIFT.md](README-SWIFT.md)** - Swift version overview and features
+### Option 2: Build from Source
 
----
+See **[BUILD-MACOS.md](BUILD-MACOS.md)** for detailed build instructions.
+
+Quick build:
+```bash
+git clone https://github.com/Zijinn/clash-party.git
+cd clash-party
+./build-swift.sh
+```
+
+## Documentation
+
+- **[BUILD-MACOS.md](BUILD-MACOS.md)** - Comprehensive build guide
+- **[INSTALL-SWIFT.md](INSTALL-SWIFT.md)** - Installation instructions
+- **[README-SWIFT.md](README-SWIFT.md)** - Detailed feature overview
+- **[DMG-PACKAGING.md](DMG-PACKAGING.md)** - DMG creation guide
+- **[CHANGELOG-SWIFT.md](CHANGELOG-SWIFT.md)** - Version history
+
+## Configuration
+
+The application stores its configuration in:
+- `~/Library/Application Support/ClashParty/`
+
+Configuration files:
+- `config.yaml`: Mihomo configuration
+- `profiles.json`: Saved profiles
+
+## Contributing
+
+Contributions are welcome! Please:
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Submit a pull request
+
+## License
+
+See [LICENSE](LICENSE) file for details.
+
+## Credits
+
+- Mihomo Core: [MetaCubeX/mihomo](https://github.com/MetaCubeX/mihomo)
+- Swift implementation: Clash Party Team
+
+## Support
+
+- Open an issue on [GitHub](https://github.com/Zijinn/clash-party/issues)
+- Join the Telegram group: [Mihomo Party Group](https://t.me/mihomo_party_group)
