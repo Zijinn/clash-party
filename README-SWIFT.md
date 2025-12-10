@@ -22,9 +22,20 @@ Clash Party is a native macOS application that provides a GUI for [Mihomo](https
 - Xcode 15.0 or later (for building from source)
 - Mihomo core binary
 
-## Building from Source
+## Installation
 
-### Prerequisites
+### Option 1: Download Pre-built DMG (Recommended)
+
+Download the latest DMG from the [releases page](https://github.com/Zijinn/clash-party/releases):
+
+1. Download `ClashParty-{version}-macOS.dmg`
+2. Open the DMG file
+3. Drag ClashParty.app to the Applications folder
+4. Launch from Applications or Spotlight
+
+### Option 2: Build from Source
+
+#### Prerequisites
 
 1. Install Xcode from the Mac App Store
 2. Install Xcode Command Line Tools:
@@ -32,31 +43,45 @@ Clash Party is a native macOS application that provides a GUI for [Mihomo](https
    xcode-select --install
    ```
 
-### Build Steps
+#### Build Steps
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/mihomo-party-org/clash-party.git
+   git clone https://github.com/Zijinn/clash-party.git
    cd clash-party
    ```
 
-2. Open the project in Xcode:
+2. Build using the convenience script:
+   ```bash
+   ./build-swift.sh
+   ```
+
+3. Or use Makefile:
+   ```bash
+   make build
+   make run
+   ```
+
+4. Or open in Xcode:
    ```bash
    open ClashParty.xcodeproj
    ```
-
-3. Build and run:
    - Select the "ClashParty" scheme
    - Click the Run button (⌘R) or go to Product > Run
 
-### Building for Release
+#### Building a DMG Package
 
-To build a release version:
+To create a distributable DMG:
 
-1. In Xcode, select Product > Archive
-2. Once the archive is created, click "Distribute App"
-3. Choose "Copy App" to export the .app bundle
-4. The application will be saved to your chosen location
+```bash
+# Build and create DMG in one command
+make release-dmg
+
+# Or create DMG from existing build
+make dmg
+```
+
+The DMG will be created at `.build/ClashParty-{version}-macOS.dmg`
 
 ## Project Structure
 

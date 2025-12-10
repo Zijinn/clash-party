@@ -44,12 +44,19 @@ This guide covers both versions, with a focus on the Swift version for optimal m
 
 ## Installation Options
 
-### Option 1: Pre-built Releases (Coming Soon)
+### Option 1: Pre-built Releases
 
-Pre-built releases will be available at:
+Pre-built releases are available at:
 https://github.com/Zijinn/clash-party/releases
 
-### Option 2: Build from Source (Current Method)
+For the Swift version, download the `.dmg` file:
+1. Go to the latest release
+2. Download `ClashParty-{version}-macOS.dmg`
+3. Open the DMG file
+4. Drag ClashParty.app to the Applications folder
+5. Launch from Applications
+
+### Option 2: Build from Source
 
 Follow the instructions below to build from source.
 
@@ -151,6 +158,41 @@ The Swift version offers 10x faster startup and 80% less memory usage compared t
    ```
    
    Built app location: `.build/Build/Products/Release/ClashParty.app`
+
+### Creating a DMG Package
+
+After building the application, you can create a distributable DMG file:
+
+1. **Using Makefile (Recommended)**
+   ```bash
+   # Build and create DMG in one command
+   make release-dmg
+   
+   # Or, if already built, just create DMG
+   make dmg
+   ```
+
+2. **Using the DMG Script Directly**
+   ```bash
+   # Build first
+   ./build-swift.sh
+   
+   # Create DMG
+   ./create-dmg.sh .build/Build/Products/Release/ClashParty.app 1.0.0
+   ```
+   
+   The script will:
+   - Create a macOS disk image (.dmg)
+   - Configure the DMG with a modern appearance
+   - Add an Applications symlink for easy installation
+   - Generate a SHA256 checksum file
+   - Optionally code sign the DMG (if CODE_SIGN_IDENTITY is set)
+
+3. **DMG Output Location**
+   
+   Created DMG location: `.build/ClashParty-{version}-macOS.dmg`
+   
+   Checksum file: `.build/ClashParty-{version}-macOS.dmg.sha256`
 
 ### Running the Swift Version
 
