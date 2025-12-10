@@ -75,9 +75,9 @@ struct ContentView: View {
                 case 2:
                     ProfilesView()
                 case 3:
-                    RulesView()
+                    RulesDetailView()
                 case 4:
-                    ConnectionsView()
+                    ConnectionsDetailView()
                 case 5:
                     LogsView()
                 default:
@@ -115,7 +115,9 @@ struct SidebarItem: View {
     }
     
     private func getBadge() -> Int? {
-        // Could show counts for connections, new logs, etc.
+        // TODO: Implement badge counts
+        // Could show: connection count, new log entries, etc.
+        // Example: if tag == 4 { return ConnectionsManager.shared.activeConnectionCount }
         return nil
     }
 }
@@ -302,7 +304,10 @@ struct QuickActionButton: View {
     let color: Color
     
     var body: some View {
-        Button(action: {}) {
+        Button(action: {
+            // TODO: Navigate to corresponding view
+            // This is a UI demonstration component
+        }) {
             VStack(spacing: 8) {
                 Image(systemName: icon)
                     .font(.system(size: 24))
@@ -477,7 +482,8 @@ struct ProxyCard: View {
         }
         .contextMenu {
             Button("Test Latency") {
-                // Action placeholder
+                // TODO: Implement latency testing
+                // Would call coreManager.testProxyLatency(proxy.name)
             }
             Button("Copy Name") {
                 NSPasteboard.general.clearContents()
@@ -642,14 +648,18 @@ struct ProfileCard: View {
             
             // Actions
             HStack(spacing: 8) {
-                Button(action: {}) {
+                Button(action: {
+                    // TODO: Show edit profile sheet
+                }) {
                     Label("Edit", systemImage: "pencil")
                         .font(.caption)
                 }
                 .buttonStyle(.bordered)
                 .controlSize(.small)
                 
-                Button(action: {}) {
+                Button(action: {
+                    // TODO: Update profile from subscription
+                }) {
                     Label("Update", systemImage: "arrow.clockwise")
                         .font(.caption)
                 }
@@ -660,7 +670,10 @@ struct ProfileCard: View {
                 Spacer()
                 
                 if !profile.isActive {
-                    Button(action: {}) {
+                    Button(action: {
+                        // TODO: Activate this profile
+                        // ConfigManager.shared.activateProfile(profile.id)
+                    }) {
                         Text("Activate")
                             .font(.caption)
                     }
@@ -690,11 +703,19 @@ struct ProfileCard: View {
             isHovered = hovering
         }
         .contextMenu {
-            Button("Activate") {}
-            Button("Edit") {}
-            Button("Update") {}
+            Button("Activate") {
+                // TODO: Activate profile
+            }
+            Button("Edit") {
+                // TODO: Show edit sheet
+            }
+            Button("Update") {
+                // TODO: Update from subscription
+            }
             Divider()
-            Button("Delete", role: .destructive) {}
+            Button("Delete", role: .destructive) {
+                // TODO: Delete profile with confirmation
+            }
         }
     }
 }
@@ -810,19 +831,8 @@ struct AddProfileView: View {
     }
 }
 
-// MARK: - Rules View
-struct RulesView: View {
-    var body: some View {
-        RulesDetailView()
-    }
-}
-
-// MARK: - Connections View
-struct ConnectionsView: View {
-    var body: some View {
-        ConnectionsDetailView()
-    }
-}
+// Note: Rules and Connections views directly use the detail views
+// which contain full implementation of features
 
 // MARK: - Logs View
 struct LogsView: View {
