@@ -27,6 +27,9 @@ jobs:
   build:
     name: Build Swift Version
     runs-on: macos-latest
+    permissions:
+      contents: read
+      actions: write
     
     steps:
       - name: Checkout code
@@ -84,6 +87,8 @@ jobs:
   lint:
     name: Swift Lint
     runs-on: macos-latest
+    permissions:
+      contents: read
     
     steps:
       - name: Checkout code
