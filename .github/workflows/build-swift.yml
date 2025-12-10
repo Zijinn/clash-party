@@ -6,11 +6,14 @@ on:
       - main
       - develop
       - 'feature/swift-*'
+    tags:
+      - 'v*'
     paths:
       - 'ClashParty/**'
       - 'ClashParty.xcodeproj/**'
       - 'Package.swift'
       - 'Makefile'
+      - 'create-dmg.sh'
       - '.github/workflows/build-swift.yml'
   pull_request:
     branches:
@@ -21,6 +24,7 @@ on:
       - 'ClashParty.xcodeproj/**'
       - 'Package.swift'
       - 'Makefile'
+      - 'create-dmg.sh'
       - '.github/workflows/build-swift.yml'
 
 jobs:
@@ -28,7 +32,7 @@ jobs:
     name: Build Swift Version
     runs-on: macos-latest
     permissions:
-      contents: read
+      contents: write
       actions: write
     
     steps:
@@ -59,19 +63,51 @@ jobs:
           ls -lah .build/Build/Products/Release/
           file .build/Build/Products/Release/ClashParty.app/Contents/MacOS/ClashParty
       
-      - name: Archive application
+      - name: Get version
+        id: get_version
+        run: |
+          VERSION=$(grep -m1 'MARKETING_VERSION' ClashParty.xcodeproj/project.pbxproj | sed -e 's/.*= \(.*\);/\1/' | tr -d ' ')
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "Version: $VERSION"
+      
+      - name: Create DMG
+        if: github.event_name == 'push'
+        run: |
+          chmod +x create-dmg.sh
+          ./create-dmg.sh .build/Build/Products/Release/ClashParty.app ${{ steps.get_version.outputs.version }}
+      
+      - name: Archive application (ZIP)
         if: github.event_name == 'push'
         run: |
           cd .build/Build/Products/Release
           zip -r ClashParty.app.zip ClashParty.app
       
-      - name: Upload artifact
-        if: github.event_name == 'push'
+      - name: Upload ZIP artifact
+        if: github.event_name == 'push' && !startsWith(github.ref, 'refs/tags/v')
         uses: actions/upload-artifact@v4
         with:
-          name: ClashParty-macOS-${{ github.sha }}
+          name: ClashParty-macOS-ZIP-${{ github.sha }}
           path: .build/Build/Products/Release/ClashParty.app.zip
           retention-days: 7
+      
+      - name: Upload DMG artifact
+        if: github.event_name == 'push' && !startsWith(github.ref, 'refs/tags/v')
+        uses: actions/upload-artifact@v4
+        with:
+          name: ClashParty-macOS-DMG-${{ github.sha }}
+          path: |
+            .build/*.dmg
+            .build/*.dmg.sha256
+          retention-days: 7
+      
+      - name: Publish Release
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            .build/*.dmg
+            .build/*.dmg.sha256
+          token: ${{ secrets.GITHUB_TOKEN }}
       
       - name: Build summary
         run: |
@@ -83,6 +119,9 @@ jobs:
           echo "**Architecture:** Universal (arm64 + x86_64)" >> $GITHUB_STEP_SUMMARY
           echo "**Configuration:** Release" >> $GITHUB_STEP_SUMMARY
           echo "**App Bundle:** ClashParty.app" >> $GITHUB_STEP_SUMMARY
+          if [ -f ".build/*.dmg" ]; then
+            echo "**Package Format:** DMG" >> $GITHUB_STEP_SUMMARY
+          fi
 
   lint:
     name: Swift Lint

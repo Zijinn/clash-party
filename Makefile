@@ -1,13 +1,14 @@
 # Makefile for Clash Party Swift
 # Build automation for the macOS Swift version
 
-.PHONY: all build clean run test archive install help
+.PHONY: all build clean run test archive install dmg release-dmg help
 
 # Variables
 SCHEME = ClashParty
 PROJECT = ClashParty.xcodeproj
 CONFIGURATION = Release
 DERIVED_DATA = .build
+VERSION = $(shell grep -m1 'MARKETING_VERSION' ClashParty.xcodeproj/project.pbxproj | sed -e 's/.*= \(.*\);/\1/' | tr -d ' ')
 
 # Default target
 all: build
@@ -64,20 +65,31 @@ install: build
 	cp -R $(DERIVED_DATA)/Build/Products/$(CONFIGURATION)/ClashParty.app /Applications/
 	@echo "Installed successfully!"
 
+# Create DMG package
+dmg:
+	@echo "Creating DMG package..."
+	./create-dmg.sh $(DERIVED_DATA)/Build/Products/$(CONFIGURATION)/ClashParty.app $(VERSION)
+
+# Build and create DMG in one command
+release-dmg: build dmg
+	@echo "Release DMG build complete!"
+
 # Show help
 help:
 	@echo "Clash Party Swift - Build System"
 	@echo ""
 	@echo "Available targets:"
-	@echo "  all      - Build the application (default)"
-	@echo "  build    - Build the application"
-	@echo "  release  - Build release version"
-	@echo "  clean    - Clean build artifacts"
-	@echo "  run      - Build and run the application"
-	@echo "  test     - Run tests"
-	@echo "  archive  - Create archive for distribution"
-	@echo "  install  - Install to /Applications"
-	@echo "  help     - Show this help message"
+	@echo "  all         - Build the application (default)"
+	@echo "  build       - Build the application"
+	@echo "  release     - Build release version"
+	@echo "  clean       - Clean build artifacts"
+	@echo "  run         - Build and run the application"
+	@echo "  test        - Run tests"
+	@echo "  archive     - Create archive for distribution"
+	@echo "  install     - Install to /Applications"
+	@echo "  dmg         - Create DMG package (requires built app)"
+	@echo "  release-dmg - Build and create DMG in one step"
+	@echo "  help        - Show this help message"
 	@echo ""
 	@echo "Usage:"
 	@echo "  make [target]"
