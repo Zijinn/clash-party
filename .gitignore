@@ -1,13 +1,13 @@
-node_modules
-resources/files
-resources/sidecar
-extra
-dist
-out
+# macOS
 .DS_Store
+
+# Logs
 *.log*
+
+# IDE
 .idea
-*.ttf
+
+# Temporary files
 party.md
 CLAUDE.md
 
