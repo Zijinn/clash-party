@@ -158,7 +158,8 @@ class CoreManager: ObservableObject {
                 }
             }
         } catch {
-            // Ignore errors in traffic monitoring
+            // Log errors at debug level for troubleshooting
+            Logger.shared.debug("Failed to update traffic stats: \(error.localizedDescription)")
         }
     }
     

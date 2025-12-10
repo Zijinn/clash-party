@@ -44,7 +44,10 @@ class AutoUpdater: ObservableObject {
     @Published var isChecking = false
     
     private let githubRepo = "mihomo-party-org/clash-party"
-    private let currentVersion = "1.8.9"
+    
+    private var currentVersion: String {
+        Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "1.8.9"
+    }
     
     private init() {}
     

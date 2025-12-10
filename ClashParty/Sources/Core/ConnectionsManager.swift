@@ -98,7 +98,8 @@ class ConnectionsManager: ObservableObject {
                 }
             }
         } catch {
-            // Ignore errors in connection monitoring
+            // Log errors at debug level to aid troubleshooting
+            Logger.shared.debug("Failed to fetch connections: \(error.localizedDescription)")
         }
     }
     

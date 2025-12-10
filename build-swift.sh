@@ -54,11 +54,13 @@ if [ $? -eq 0 ]; then
     echo -e "App location: ${DERIVED_DATA}/Build/Products/${CONFIGURATION}/ClashParty.app"
     echo ""
     
-    # Ask if user wants to run the app
-    read -p "Do you want to run the app now? (y/n) " -n 1 -r
-    echo
-    if [[ $REPLY =~ ^[Yy]$ ]]; then
-        open "${DERIVED_DATA}/Build/Products/${CONFIGURATION}/ClashParty.app"
+    # Ask if user wants to run the app (skip in CI)
+    if [ -z "$CI" ] && [ -t 0 ]; then
+        read -p "Do you want to run the app now? (y/n) " -n 1 -r
+        echo
+        if [[ $REPLY =~ ^[Yy]$ ]]; then
+            open "${DERIVED_DATA}/Build/Products/${CONFIGURATION}/ClashParty.app"
+        fi
     fi
 else
     echo ""

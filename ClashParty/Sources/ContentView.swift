@@ -163,6 +163,11 @@ struct ProfilesView: View {
                 Button("Add Profile") {
                     showingAddProfile = true
                 }
+                Button("Refresh All") {
+                    Task {
+                        await configManager.loadProfiles()
+                    }
+                }
                 Spacer()
             }
             .padding()
@@ -223,7 +228,12 @@ struct AddProfileView: View {
                 .keyboardShortcut(.cancelAction)
                 
                 Button("Add") {
-                    // Add profile logic
+                    let newProfile = Profile(
+                        name: name,
+                        url: url.isEmpty ? nil : url,
+                        isActive: false
+                    )
+                    ConfigManager.shared.addProfile(newProfile)
                     dismiss()
                 }
                 .keyboardShortcut(.defaultAction)

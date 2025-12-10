@@ -27,10 +27,16 @@ let package = Package(
                 "ClashPartyApp.swift",
                 "ContentView.swift",
                 "Core/CoreManager.swift",
+                "Core/ConnectionsManager.swift",
+                "Core/RulesManager.swift",
                 "Config/ConfigManager.swift",
                 "Config/ProfileManager.swift",
                 "System/SystemProxy.swift",
-                "Utils/Logger.swift"
+                "Utils/Logger.swift",
+                "Utils/AutoUpdater.swift",
+                "Utils/NetworkMonitor.swift",
+                "Views/ConnectionsDetailView.swift",
+                "Views/RulesDetailView.swift"
             ],
             resources: [
                 .copy("../Resources/Assets.xcassets")
