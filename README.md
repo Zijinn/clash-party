@@ -53,4 +53,10 @@ A native macOS version written in Swift is now available! This version offers:
 
 See [README-SWIFT.md](README-SWIFT.md) for details and build instructions.
 
+### 📖 Build and Usage Documentation
+
+- **[BUILD-MACOS.md](BUILD-MACOS.md)** - Comprehensive guide for building and using Clash Party on macOS (both Swift and Electron versions)
+- **[INSTALL-SWIFT.md](INSTALL-SWIFT.md)** - Detailed Swift version installation guide
+- **[README-SWIFT.md](README-SWIFT.md)** - Swift version overview and features
+
 ---
